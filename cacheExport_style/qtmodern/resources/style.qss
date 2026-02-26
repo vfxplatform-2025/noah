@@ -1,0 +1,173 @@
+#title_Label, #frame, #frame_3, #stackeStackedWidget, #optFrame, #exportFrame, #subExportStackedWidget {
+  border: 1px solid palette(dark);
+}
+
+#line_14, #line_15 {
+  border: 1px inset palette(dark);
+  border-bottom-color: #444444;
+}
+
+#line, #line_2, #line_3, #line_4, #line_5, #line_6, #line_7, #line_8, #line_9, #line_10,
+#line_11, #line_12, #line_13, #line_14, #line_15, #line_16, #line_17, #line_18 {
+  border: 1px inset palette(dark);
+  border-right-color: #444444;
+}
+
+QComboBox {
+  border: none;
+}
+
+/*
+ * #lblTitle {
+ *   background-color: #5d7278;
+ *   color: #222222;
+ * }
+ */
+
+/*
+ * QGroupBox
+ */
+
+QGroupBox {
+  background-color: palette(alternate-base);
+  border: 1px solid palette(midlight);
+  margin-top: 25px;
+}
+
+QGroupBox::title {
+    background-color: transparent;
+}
+
+/*
+ * QToolBar
+ */
+
+QToolBar {
+  border: none;
+}
+
+/*
+ * QTabBar
+ */
+
+QTabBar{
+  background-color: transparent;
+}
+
+QTabBar::tab{
+  padding: 4px 6px;
+  background-color: transparent;
+  border: 1px solid palette(dark);
+  border-bottom: 2px solid transparent;
+}
+
+QTabBar::tab:selected, QTabBar::tab:hover {
+  color: palette(text);
+  border-bottom: 2px solid palette(highlight);
+}
+
+QTabBar::tab:selected:disabled {
+  border-bottom: 2px solid palette(light);
+}
+
+/*
+ * QScrollBar
+ */
+
+QScrollBar:vertical {
+  background: palette(base);
+  border-top-right-radius: 2px;
+  border-bottom-right-radius: 2px;
+  width: 16px;
+  margin: 0px;
+}
+
+QScrollBar::handle:vertical {
+  background-color: palette(alternate-base);
+  border-radius: 2px;
+  min-height: 20px;
+  margin: 2px 4px 2px 4px;
+}
+
+QScrollBar::handle:vertical:hover {
+  background-color:palette(highlight);
+}
+
+QScrollBar::add-line:vertical {
+  background: none;
+  height: 0px;
+  subcontrol-position: right;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:vertical {
+  background: none;
+  height: 0px;
+  subcontrol-position: left;
+  subcontrol-origin: margin;
+}
+
+QScrollBar:horizontal{
+  background: palette(base);
+  height: 16px;
+  margin: 0px;
+}
+
+QScrollBar::handle:horizontal {
+  background-color: palette(alternate-base);
+  border-radius: 2px;
+  min-width: 20px;
+  margin: 4px 2px 4px 2px;
+}
+
+QScrollBar::handle:horizontal:hover {
+  background-color: palette(highlight);
+}
+
+QScrollBar::add-line:horizontal {
+  background: none;
+  width: 0px;
+  subcontrol-position: bottom;
+  subcontrol-origin: margin;
+}
+
+QScrollBar::sub-line:horizontal {
+  background: none;
+  width: 0px;
+  subcontrol-position: top;
+  subcontrol-origin: margin;
+}
+
+/*
+ * QScrollArea
+ */
+
+QScrollArea {
+  border-style: none;
+}
+
+QScrollArea #scrollAreaWidgetContents {
+  background-color: palette(alternate-base);
+}
+
+/*
+ * QSlider
+ */
+
+QSlider::handle:horizontal {
+  border-radius: 5px;
+  background-color: palette(light);
+  max-height: 20px;
+}
+
+QSlider::add-page:horizontal {
+  background: palette(base);
+}
+
+QSlider::sub-page:horizontal {
+  background: palette(highlight);
+}
+
+QSlider::sub-page:horizontal:disabled {
+  background-color: palette(light);
+}

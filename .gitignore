@@ -1,0 +1,9 @@
+__pycache__/
+*.pyc
+*.pyo
+.idea/
+.claude/
+*.swp
+*.swo
+*~
+log.txt
