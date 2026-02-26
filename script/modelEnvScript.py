@@ -78,7 +78,7 @@ def modelEnvReferenceFile(itemName, itemDir, rootType):
     cmds.file("%s" % itemDir,
               r=1, gl=1, type="mayaBinary", ignoreVersion=1,
               namespace="modelEnv",
-              mergeNamespacesOnClash=False, options="v=0;")
+              mergeNamespacesOnClash=True, options="v=0;")
 
     writeItemName = initItemImportWrite(itemName, itemDir)
     return writeItemName

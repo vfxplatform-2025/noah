@@ -1689,6 +1689,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # file Dir check
         fileCheck = utilScript.itemFilecheck(cameraDir, cameraFileName, "camera")
+        versionUp = True
 
         # overwrite
         if fileCheck:
@@ -1696,6 +1697,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         # stereo check
         stereoCamCheck = cameraScript.stereoCamCheck()
@@ -1752,7 +1754,7 @@ class MainWindow(QtWidgets.QMainWindow):
                     return
 
             # cameraScript.assetInfoExport(fileList)
-            takeScript.takeExport(fileList, "camera")
+            takeScript.takeExport(fileList, "camera", versionUp=versionUp)
             # self.shots[self.shotItem[self.shotClass]], fileList , "Ani", "atom"
             self.shot(self.shotClass)  # refresh treewidget
             # cmds.confirmDialog ( title ='complete' , message ='Export complete', button=[ 'ok' ])
@@ -1805,6 +1807,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # alembicFileName, alembicDir = utilScript.itemDircheck(objectName, dirName)
         alembicFileName, alembicDir = utilScript.itemDircheck(dirName)
         fileCheck = utilScript.itemFilecheck(alembicDir)
+        versionUp = True
 
         # select
         root = self.alembic_TreeWidget.invisibleRootItem()  # treewidget List find name
@@ -1843,6 +1846,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         alembicItemList = item  # selecting
         if hiddenList:
@@ -1870,7 +1874,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             # info export
             # alembicScript.assetInfoExport(fileList, "farm", frameType)
-            takeScript.takeExport(fileList, "alembic", {}, "farm", frameType)
+            takeScript.takeExport(fileList, "alembic", {}, "farm", frameType, versionUp=versionUp)
 
     def openTractor(self):
         tractorV = str(self.tractorEngine_comboBox.currentText())
@@ -1882,6 +1886,7 @@ class MainWindow(QtWidgets.QMainWindow):
         partType = self.type_ComboBox.currentText()
         rangeFileName, rangeDir = utilScript.itemDircheck("frameRange")
         fileCheck = utilScript.itemFilecheck(rangeDir)
+        versionUp = True
 
         # overwrite
         if fileCheck:
@@ -1889,6 +1894,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         # frameRange Export .py
         fileList = {}
@@ -1896,7 +1902,7 @@ class MainWindow(QtWidgets.QMainWindow):
         fileList.update(rangeFile)
 
         # info export
-        takeScript.takeExport(fileList, "frameRange")
+        takeScript.takeExport(fileList, "frameRange", versionUp=versionUp)
 
         self.shot(self.shotClass)
         cmd = 'DISPLAY=:O notify-send "Noah Message" "Export Complete" -t 10000'
@@ -1908,6 +1914,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # fileCheck = resolutionScript.itemFilecheck( rangeDir)
         rangeFileName, rangeDir = utilScript.itemDircheck("resolution")
         fileCheck = utilScript.itemFilecheck(rangeDir)
+        versionUp = True
 
         # overwrite
         if fileCheck:
@@ -1915,6 +1922,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         fileList = {}
         # rangeFile = resolutionScript.itemExport( rangeFileName , rangeDir, "resolutionSet" )
@@ -1923,7 +1931,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # info export
         # resolutionScript.assetInfoExport( fileList )
-        takeScript.takeExport(fileList, "resolutionSet")
+        takeScript.takeExport(fileList, "resolutionSet", versionUp=versionUp)
         self.shot(self.shotClass)
         cmd = 'DISPLAY=:O notify-send "Noar Message" "Export Complete" -t 10000'
         Popen(cmd, shell=True, stdout=PIPE)
@@ -1934,6 +1942,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # fileCheck = dummyScript.itemFilecheck( dummyDir)
         dummyFileName, dummyDir = utilScript.itemDircheck("dummy")
         fileCheck = utilScript.itemFilecheck(dummyDir)
+        versionUp = True
 
         # overwrite
         if fileCheck:
@@ -1941,6 +1950,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         # dummyItemList = dummyScript.itemListSelect()  # selecting
         dummyItemList = utilScript.itemListSelect()  # selecting
@@ -1953,7 +1963,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # info export
         # dummyScript.assetInfoExport( fileList )
-        takeScript.takeExport(fileList, "dummy")
+        takeScript.takeExport(fileList, "dummy", versionUp=versionUp)
         self.shot(self.shotClass)
         cmd = 'DISPLAY=:O notify-send "Noar Message" "Export Complete" -t 10000'
         Popen(cmd, shell=True, stdout=PIPE)
@@ -1964,6 +1974,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # fileCheck = modelEnvScript.itemFilecheck( modelEnvDir)
         modelEnvFileName, modelEnvDir = utilScript.itemDircheck("modelEnv")
         fileCheck = utilScript.itemFilecheck(modelEnvDir)
+        versionUp = True
 
         # overwrite
         if fileCheck:
@@ -1971,6 +1982,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         # modelEnvItemName = modelEnvScript.itemListSelect()  # selecting
         modelEnvItemName = utilScript.itemListSelect("modelEnv")  # selecting
@@ -1985,7 +1997,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # info export
         # modelEnvScript.assetInfoExport( fileList )
-        takeScript.takeExport(fileList, "modelEnv")
+        takeScript.takeExport(fileList, "modelEnv", versionUp=versionUp)
 
         self.shot(self.shotClass)
         cmd = 'DISPLAY=:O notify-send "Noar Message" "Export Complete" -t 10000'
@@ -1997,6 +2009,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # fileCheck = lookdevScript.itemFilecheck(lookdevDir)
         lookdevFileName, lookdevDir = utilScript.itemDircheck("lookdev")
         fileCheck = utilScript.itemFilecheck(lookdevDir)
+        versionUp = True
 
         # overwrite
         if fileCheck:
@@ -2004,6 +2017,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         # assetName = lookdevDir.split("/")[5]
         assetName = lookdevDir.split("/show/")[1].split("/")[3]
@@ -2016,7 +2030,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # info export
         # lookdevScript.assetInfoExport(fileList)
-        takeScript.takeExport(fileList, "lookdev")
+        takeScript.takeExport(fileList, "lookdev", versionUp=versionUp)
         self.shot(self.shotClass)
         cmd = 'DISPLAY=:O notify-send "Noar Message" "Export Complete" -t 10000'
         Popen(cmd, shell=True, stdout=PIPE)
@@ -2221,6 +2235,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # fileCheck = atomScript.itemFilecheck( atomDir)
         atomFileName, atomDir = utilScript.itemDircheck("atom", objectName)
         fileCheck = utilScript.itemFilecheck(atomDir)
+        versionUp = True
 
         # select
         root = self.atom_TreeWidget.invisibleRootItem()  # find name
@@ -2236,6 +2251,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         # atomItemList = atomScript.itemListSelect(item)  # selecting
 
@@ -2256,13 +2272,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
         # info export
         # atomScript.assetInfoExport( fileList )
-        takeScript.takeExport(fileList, "atom")
+        takeScript.takeExport(fileList, "atom", versionUp=versionUp)
 
         # rig Info
         rigData = rigScript.findRigData(fileList, self.ASSETS_TYPE)
         # rigScript.subAssetInfoExport( fileList, rigData )
         # takeScript.takeExport(fileList, "rig", "", rigData)
-        takeScript.takeExport(fileList, "rig", rigData)
+        takeScript.takeExport(fileList, "rig", rigData, versionUp=versionUp)
 
         # model Info
         modelData = modelScript.exportTake(fileList, ["globalTake", "localTake"],
@@ -2292,10 +2308,19 @@ class MainWindow(QtWidgets.QMainWindow):
 
         fileList = {}
         list(map(lambda x: fileList.update({str(root.child(x).text(0)): str(root.child(x).text(1))}), list(range(child_count))))
+        versionUp = True
+        if fileList:
+            has_existing = any([os.path.exists(p) for p in fileList.values() if p])
+            if has_existing:
+                ret = QtWidgets.QMessageBox.question(self, "Quesstion Message", "File ovewrite ?", QtWidgets.QMessageBox.Ok,
+                                                     QtWidgets.QMessageBox.Cancel)
+                if ret == QtWidgets.QMessageBox.Cancel:
+                    return
+                versionUp = False
 
         # # info export
         # yetiCacheScript.assetInfoExport(fileList)
-        takeScript.takeExport(fileList, "yetiCache")
+        takeScript.takeExport(fileList, "yetiCache", versionUp=versionUp)
         self.shot(self.shotClass)  # refresh assetInfoTreeWidget
 
         cmd = 'DISPLAY=:O notify-send "Noar Message" "Export Complete" -t 10000'
@@ -2319,6 +2344,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # fileCheck = geoCacheScript.itemFilecheck(geoCacheDir)
         geoCacheFileName, geoCacheDir = utilScript.itemDircheck(dirName)
         fileCheck = utilScript.itemFilecheck(geoCacheDir)
+        versionUp = True
 
         # select
         root = self.geoCache_TreeWidget.invisibleRootItem()  # treewidget List find name
@@ -2334,6 +2360,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         # geoCacheItemList = geoCacheScript.itemListSelect(item)  # selecting
         geoCacheItemList = utilScript.itemListSelect("geoCache", item)  # selecting
@@ -2359,13 +2386,13 @@ class MainWindow(QtWidgets.QMainWindow):
 
             # info export
             # geoCacheScript.assetInfoExport(fileList)
-            takeScript.takeExport(fileList, "geoCache")
+            takeScript.takeExport(fileList, "geoCache", versionUp=versionUp)
 
             # rig Info
             rigData = rigScript.findRigData(fileList)
             # rigScript.subAssetInfoExport(fileList, rigData)  # 캐쉬 데이타/ 리깅 데이타
             # takeScript.takeExport(fileList, "rig", "", rigData)
-            takeScript.takeExport(fileList, "rig", rigData)
+            takeScript.takeExport(fileList, "rig", rigData, versionUp=versionUp)
             modelData = modelScript.exportTake(fileList, ["globalTake", "localTake"],
                                                "model")  # takeTypeList = ["globalTake", "localTake"]
 
@@ -2403,7 +2430,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             # info export
             # geoCacheScript.assetInfoExport(fileList)
-            takeScript.takeExport(fileList, "geoCache")
+            takeScript.takeExport(fileList, "geoCache", versionUp=versionUp)
 
         self.shot(self.shotClass)  # refresh assetInfoTreeWidget
         cmd = 'DISPLAY=:O notify-send "Noar Message" "Export Complete" -t 10000'
@@ -2424,6 +2451,7 @@ class MainWindow(QtWidgets.QMainWindow):
         # fileCheck = alembicScript.itemFilecheck( alembicDir)
         alembicFileName, alembicDir = utilScript.itemDircheck(dirName)
         fileCheck = utilScript.itemFilecheck(alembicDir)
+        versionUp = True
 
         # select
         root = self.alembic_TreeWidget.invisibleRootItem()  # treewidget List find name
@@ -2457,6 +2485,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         alembicItemList = item  # selecting
         if hiddenList:
@@ -2494,7 +2523,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
             # info export
             # alembicScript.assetInfoExport( fileList, "local", frameType )
-            takeScript.takeExport(fileList, "alembic", {}, "local", frameType)
+            takeScript.takeExport(fileList, "alembic", {}, "local", frameType, versionUp=versionUp)
 
             self.shot(self.shotClass)  # refresh assetInfoTreeWidget
             cmd = 'DISPLAY=:O notify-send "Noar Message" "Export Complete" -t 10000'
@@ -2536,11 +2565,13 @@ class MainWindow(QtWidgets.QMainWindow):
         
         # Check if directory exists
         fileCheck = utilScript.itemFilecheck(exportDir)
+        versionUp = True
         if fileCheck:
             ret = QtWidgets.QMessageBox.question(self, "Question Message", "File overwrite?", 
                                                QtWidgets.QMessageBox.Ok, QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
         
         try:
             cmds.refresh(su=1)
@@ -2558,7 +2589,7 @@ class MainWindow(QtWidgets.QMainWindow):
             
             if fileList:
                 # Export take information
-                takeScript.takeExport(fileList, "mayaHair", {}, "local", frameType)
+                takeScript.takeExport(fileList, "mayaHair", {}, "local", frameType, versionUp=versionUp)
                 
                 # Refresh UI
                 self.shot(self.shotClass)
@@ -2610,6 +2641,7 @@ class MainWindow(QtWidgets.QMainWindow):
 
         currentSceneName, exportDir = utilScript.itemDircheck(dirName)  # exportFileName == currentSceneName
         fileCheck = utilScript.itemFilecheck(exportDir)
+        versionUp = True
 
         # select
         root = treeObj.invisibleRootItem()  # treewidget List find name
@@ -2627,6 +2659,7 @@ class MainWindow(QtWidgets.QMainWindow):
                                                  QtWidgets.QMessageBox.Cancel)
             if ret == QtWidgets.QMessageBox.Cancel:
                 return
+            versionUp = False
 
         # key Bake
         num = self.handle_LineEdit.text()
@@ -2773,12 +2806,12 @@ class MainWindow(QtWidgets.QMainWindow):
             if fileType != "renderlayer":
                 if fileType == "instance":
                     takeScript.takeExport(fileList, instanceFileType, frameType="CurrentFrame", instanceInfo=pointInfo,
-                                          fileDirV=instanceFileDir)
+                                          fileDirV=instanceFileDir, versionUp=versionUp)
                 else:
-                    takeScript.takeExport(fileList, fileType, {}, exportType, frameType)
+                    takeScript.takeExport(fileList, fileType, {}, exportType, frameType, versionUp=versionUp)
                 if fileType == "atom":
                     rigData = rigScript.findRigData(fileList, self.ASSETS_TYPE)
-                    takeScript.takeExport(fileList, "rig", rigData, exportType, versionUp=True)
+                    takeScript.takeExport(fileList, "rig", rigData, exportType, versionUp=versionUp)
 
                 self.shot(self.shotClass)  # refresh assetInfoTreeWidget
 

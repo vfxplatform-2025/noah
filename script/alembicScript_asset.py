@@ -464,11 +464,11 @@ def alembicImportFile (item, itemDir, rootType, type):
         utilScript.pluginChecks("abc")
         nameSpaceCheck(item)
         if ":" in item:
-            returnList = cmds.file("%s" %itemDir , namespace = "%s" %item.split(":")[0], i=1, pr =1, ra=True,  mergeNamespacesOnClash =False, type ="Alembic", rnn=1)
+            returnList = cmds.file("%s" %itemDir , namespace = "%s" %item.split(":")[0], i=1, pr =1, ra=True,  mergeNamespacesOnClash =True, type ="Alembic", rnn=1)
             # print ">" * 10, returnList
         else:
-#             returnList = cmds.file("%s" %itemDir , namespace = ":", i=1, pr =1, ra=True,  mergeNamespacesOnClash =False, type ="Alembic", rnn=1)
-            returnList = cmds.file("%s" %itemDir, i =True , type ="Alembic" ,  ignoreVersion=True, mergeNamespacesOnClash= 0, options="v=0", pr= True, loadReferenceDepth="all" ,returnNewNodes=1)
+#             returnList = cmds.file("%s" %itemDir , namespace = ":", i=1, pr =1, ra=True,  mergeNamespacesOnClash =True, type ="Alembic", rnn=1)
+            returnList = cmds.file("%s" %itemDir, i =True , type ="Alembic" ,  ignoreVersion=True, mergeNamespacesOnClash= 1, options="v=0", pr= True, loadReferenceDepth="all" ,returnNewNodes=1)
             # print ">" * 10, returnList
 
         topGroup= [x for x in returnList if x.count("|") == 1]

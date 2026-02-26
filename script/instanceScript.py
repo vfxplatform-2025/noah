@@ -68,7 +68,7 @@ def instanceImport(objList , type, rootType, itemNum=1, takeName="", sqcV="", sh
                           namespace=":",
                           r=1, gl=1, type="mayaBinary", ignoreVersion=1,
                           shd=["displayLayers", "shadingNetworks", "renderLayersByName"],
-                          mergeNamespacesOnClash=False, options="v=0;")
+                          mergeNamespacesOnClash=True, options="v=0;")
                 '''
                 instanceImportInfo(itemName, itemDir, rootType, takeName, sqcV, shotV)
 
@@ -77,7 +77,7 @@ def instanceImport(objList , type, rootType, itemNum=1, takeName="", sqcV="", sh
                           namespace="%s" % itemName.split(":")[0],
                           r=1, gl=1, type="mayaBinary", ignoreVersion=1,
                           shd=["displayLayers", "shadingNetworks", "renderLayersByName"],
-                          mergeNamespacesOnClash=False, options="v=0;")
+                          mergeNamespacesOnClash=True, options="v=0;")
                 instanceImportInfo(itemName, itemDir, rootType, takeName, sqcV, shotV, namespaceName=namespaceName)
 
         #if type == "import":

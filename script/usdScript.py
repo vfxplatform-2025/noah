@@ -187,18 +187,37 @@ def usdLoadMesh():
 def scale_checker(item):
     """Check uniform scale of the item"""
     non_uniform_scales = set()
+    
+    # Check if the item exists first
+    if not cmds.objExists(item):
+        print("scale_checker: Item '{}' does not exist".format(item))
+        return 1
+    
     children = cmds.listRelatives(item, allDescendents=True, type='transform') or []
 
     for child in children:
-        if cmds.nodeType(child) == 'transform':
-            scaleX = round(cmds.getAttr(child + '.scaleX'), 3)
-            scaleY = round(cmds.getAttr(child + '.scaleY'), 3)
-            scaleZ = round(cmds.getAttr(child + '.scaleZ'), 3)
+        # Check if child exists before checking nodeType
+        if not cmds.objExists(child):
+            print("scale_checker: Child '{}' does not exist, skipping".format(child))
+            continue
+            
+        try:
+            if cmds.nodeType(child) == 'transform':
+                try:
+                    scaleX = round(cmds.getAttr(child + '.scaleX'), 3)
+                    scaleY = round(cmds.getAttr(child + '.scaleY'), 3)
+                    scaleZ = round(cmds.getAttr(child + '.scaleZ'), 3)
 
-            if scaleX == scaleY == scaleZ != 1:
-                non_uniform_scales.add(scaleX)
-            if len(non_uniform_scales) > 1:
-                return None
+                    if scaleX == scaleY == scaleZ != 1:
+                        non_uniform_scales.add(scaleX)
+                    if len(non_uniform_scales) > 1:
+                        return None
+                except Exception as e:
+                    print("scale_checker: Error getting scale for '{}': {}".format(child, str(e)))
+                    continue
+        except Exception as e:
+            print("scale_checker: Error checking nodeType for '{}': {}".format(child, str(e)))
+            continue
 
     return non_uniform_scales.pop() if non_uniform_scales else 1
 

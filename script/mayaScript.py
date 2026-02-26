@@ -97,7 +97,7 @@ def mayaImportFile(itemName, itemDir, rootType):
         mayaType = "mayaAscii"
 
     cmds.file("%s" % itemDir, i=True, type=mayaType, ignoreVersion=True, \
-              mergeNamespacesOnClash=0, options="v=0", pr=True, loadReferenceDepth="all", returnNewNodes=1)
+              mergeNamespacesOnClash=1, options="v=0", pr=True, loadReferenceDepth="all", returnNewNodes=1)
 
     writeItemName = setWirteItme(rootType, name, itemDir)
     return writeItemName
@@ -137,9 +137,29 @@ def setWirteItme(rootType, itemName, itemDir):
 
 # write
 def initMayaItemImportWrite(itemName, itemDir, rootType):
-    mayaObj = cmds.ls('%s' % itemName, r=1)[0]
-    if not cmds.ls('%s.%s' % (mayaObj, rootType)):
-        cmds.addAttr('%s' % mayaObj, ln=rootType, dt="string")
+    hits = cmds.ls(itemName, r=True, long=True) or []
 
-    cmds.setAttr('%s.%s' % (mayaObj, rootType), "%s,%s" % (itemName, itemDir), type="string")
-    return '%s.%s' % (mayaObj, rootType)
+    if not hits:
+        # 이번 케이스처럼 실제 루트가 다른 이름일 수 있으니
+        # 파일명 기반으로 후보를 더 정확히 잡아준다.
+        base = itemDir.split("/")[-1].split(".")[0]   # tp_c0080ma_e200_romi_princess_set_hair
+        cand = cmds.ls("|%s" % base, long=True) or cmds.ls("*%s*" % base, long=True) or []
+
+        if len(cand) == 1:
+            mayaObj = cand[0]
+        else:
+            raise RuntimeError(
+                "[IMPORT] Cannot find node named '%s' after import.\n"
+                "itemDir=%s\ncandidates=%s"
+                % (itemName, itemDir, cand)
+            )
+    else:
+        mayaObj = hits[0]
+
+    if not cmds.objExists("%s.%s" % (mayaObj, rootType)):
+        cmds.addAttr(mayaObj, ln=rootType, dt="string")
+
+    cmds.setAttr("%s.%s" % (mayaObj, rootType), "%s,%s" % (itemName, itemDir), type="string")
+    return "%s.%s" % (mayaObj, rootType)
+
+

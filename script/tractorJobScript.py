@@ -3,7 +3,7 @@
 import os, sys
 import imp
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-sys.path.append("/core/Linux/APPZ/renderFarm/tractor/Tractor-2.4/lib/python2.7/site-packages")
+# sys.path.append("/core/Linux/APPZ/renderFarm/tractor/Tractor-2.4/lib/python2.7/site-packages")
 import tractor.api.author as author
 imp.reload(author)
 
@@ -54,7 +54,7 @@ def tractorExport(startF, endF, fileList , itemDic, num, step_num, frameType, fa
         endF = int(endF)
 
         # taskCmd
-        taskCmd = "source /core/Linux/ENV/maya%s_renderFarm_arnold.env && "%(mayaVersion)
+        taskCmd = "source /core/Linux/ENV/maya%s_renderFarm.env && "%(mayaVersion)
         taskCmd += "mayapy -c \"import os;import sys;sys.path.append('%s/script');"%scriptPath
         taskCmd += "from maya import standalone, cmds;standalone.initialize();"
         if mayaVersion == "2017":
@@ -356,7 +356,7 @@ def itemExport(fileList , itemdir,  itemList, num, frameType, scenePath, takeVer
         scenePathList = scenePath.split("/")
         sceneSetPath = "/".join(scenePathList[:-1])+"/"+scenePathList[-1].split(".")[0]+"_sceneSet.mb"
         sceneSetPath = sceneSetPath.replace("/tmp", "")
-        postTaskCmd += "source /core/Linux/ENV/maya%s_renderFarm_arnold.env &&" \
+        postTaskCmd += "source /core/Linux/ENV/maya%s_renderFarm.env &&" \
                     "mayapy -c \"import os;from maya import standalone, cmds;standalone.initialize();" \
                     "cmds.loadPlugin('AbcImport.so');import sys;sys.path.append('%s');sys.path.append('%s/script');import alembicScript;alembicScript.alembicImportByJson('%s', 'alembic', '');" \
                     "cmds.file(rename='%s');cmds.file(save=True);standalone.uninitialize();os._exit(0);\"" % \
@@ -505,7 +505,7 @@ def itemExport(fileList , itemdir,  itemList, num, frameType, scenePath, takeVer
                     taskCmd += "--defaultPrim '%s'" % defaultPrimName
                 else:
                     # Original Alembic export
-                    taskCmd = "source /core/Linux/ENV/maya%s_renderFarm_arnold.env && " \
+                    taskCmd = "source /core/Linux/ENV/maya%s_renderFarm.env && " \
                               "mayapy -c \"import os;from maya import standalone, cmds;standalone.initialize();%s;" \
                               "cmds.loadPlugin('AbcExport.so');%s;cmds.AbcExport(j='%s');%s\"" % \
                               (mayaVersion, fileOpt, hideCmd, abcOpt, exitCmd)
@@ -537,7 +537,7 @@ def itemExport(fileList , itemdir,  itemList, num, frameType, scenePath, takeVer
                     taskCmd += "--defaultPrim '%s'" % defaultPrimName
                 else:
                     # Original Alembic export
-                    taskCmd = "source /core/Linux/ENV/maya%s_renderFarm_arnold.env && " \
+                    taskCmd = "source /core/Linux/ENV/maya%s_renderFarm.env && " \
                               "mayapy -c \"import os;from maya import standalone, cmds;standalone.initialize();%s;" \
                               "cmds.loadPlugin('AbcExport.so');cmds.AbcExport(j='%s');%s\"" % \
                               (mayaVersion, fileOpt, abcOpt, exitCmd)
@@ -545,7 +545,7 @@ def itemExport(fileList , itemdir,  itemList, num, frameType, scenePath, takeVer
         if fileType == "ass":
             exportCmd = 'arnoldExportAss -startFrame %s -endFrame %s -frameStep %s -f \\\\"%s/%s.ass\\\\" -s -shadowLinks 1  -mask 2303 -lightLinks 1  -boundingBox -cam perspShape %s;'\
                 % (startF, endF, step_num, itemNewDir, fileName, cmds.ls(item, l=1)[0])
-            taskCmd = "source /core/Linux/ENV/maya%s_renderFarm_arnold.env && " \
+            taskCmd = "source /core/Linux/ENV/maya%s_renderFarm.env && " \
                       "mayapy -c \"import os;from maya import standalone, cmds, mel;standalone.initialize();cmds.loadPlugin('mtoa.so');cmds.file('%s', force=True, open=True);" \
                       "mel.eval('%s');standalone.uninitialize();os._exit(0)\"" % (mayaVersion, mayaVersion, scenePath, exportCmd)
 

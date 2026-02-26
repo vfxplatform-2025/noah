@@ -64,7 +64,7 @@ def dummyImportFile(itemName, itemDir, rootType):
         return
 
     cmds.file("%s" % itemDir, i=True, type="mayaBinary", ignoreVersion=True, \
-              mergeNamespacesOnClash=0, options="v=0", pr=True, loadReferenceDepth="all", returnNewNodes=1)
+              mergeNamespacesOnClash=1, options="v=0", pr=True, loadReferenceDepth="all", returnNewNodes=1)
 
     writeItemName = setWirteItme(rootType, name, itemDir)
     return writeItemName

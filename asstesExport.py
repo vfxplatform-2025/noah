@@ -1719,6 +1719,19 @@ class assetsView(QtWidgets.QWidget):
         self.savefileName = str(self.pubWindow.titleLineEdit.text())
         self.savefileText = str(self.pubWindow.textEdit.toPlainText())
         # print ">>>>", self.savefileName, self.pubFileList["pubDir"], self.pubFileList["itemName"]
+        self.versionUp = True
+        pubDir = self.pubFileList.get("pubDir", "")
+        if pubDir and self.savefileName:
+            candidates = []
+            if "/model/" in pubDir:
+                candidates.append("{0}/{1}/{1}.mb".format(pubDir, self.savefileName))
+                candidates.append("{0}/{1}".format(pubDir, self.savefileName))
+            else:
+                candidates.append("{0}/{1}.mb".format(pubDir, self.savefileName))
+            candidates.extend(glob.glob("{0}/{1}.*".format(pubDir, self.savefileName)))
+            candidates.extend(glob.glob("{0}/{1}_*.*".format(pubDir, self.savefileName)))
+            if any([os.path.exists(p) for p in candidates]):
+                self.versionUp = False
 
         # Publish File
         if "/rig/" in self.pubFileList['pubDir'] or "/dyn/" in self.pubFileList['pubDir']:
@@ -2026,7 +2039,7 @@ class assetsView(QtWidgets.QWidget):
 
     def noahAssetInfoExport(self):
         deptType = str(self.parent.type_ComboBox.currentText())
-        takeScript.takeExport(self.savefileList, deptType)
+        takeScript.takeExport(self.savefileList, deptType, versionUp=self.versionUp)
 
         self.refresh()
 
@@ -2579,4 +2592,3 @@ class assetsView(QtWidgets.QWidget):
                             self.refreshed.emit()
 
         self.refresh()
-

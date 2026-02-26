@@ -12,6 +12,10 @@ __all__.append('mel')
 import maya.OpenMayaUI as mui
 __all__.append('mui')
 
+# ucat module path
+import sys
+if '/storage/.NAS5/core/TD/pipeline/usd_script' not in sys.path:
+    sys.path.append('/storage/.NAS5/core/TD/pipeline/usd_script')
 import ucat
 importlib.reload(ucat)
 __all__.append('ucat')

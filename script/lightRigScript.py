@@ -86,13 +86,13 @@ def litRigImportFile(itemName, itemDir, rootType, workType):
     if workType == "asset" or ":" not in itemName:
         #         print ">>>>>>> a ", itemName
         cmds.file("%s" % itemDir, i=True, type="mayaBinary", ignoreVersion=True, \
-                  mergeNamespacesOnClash=0, options="v=0", pr=True, loadReferenceDepth="all", returnNewNodes=1)
+                  mergeNamespacesOnClash=1, options="v=0", pr=True, loadReferenceDepth="all", returnNewNodes=1)
     else:
         #         print ">>>>>>> b ", itemName
         cmds.file("%s" % itemDir,
                   namespace="%s" % itemName.split(":")[0],
                   i=1, pr=1, type="mayaBinary", ignoreVersion=1,
-                  ra=True, mergeNamespacesOnClash=False, options="v=0;")
+                  ra=True, mergeNamespacesOnClash=True, options="v=0;")
 
     mentalNode = cmds.ls(['mentalrayGlobals', 'mentalrayItemsList'])
 
@@ -125,14 +125,14 @@ def litRigReferenceFile(itemName, itemDir, rootType, workType):
                   namespace=":",
                   r=1, gl=1, type="mayaBinary", ignoreVersion=1,
                   shd=["displayLayers", "shadingNetworks", "renderLayersByName"],
-                  mergeNamespacesOnClash=False, options="v=0;")
+                  mergeNamespacesOnClash=True, options="v=0;")
     else:
         #         print "CCC"
         cmds.file("%s" % itemDir, returnNewNodes=1,
                   namespace="%s" % itemName.split(":")[0],
                   r=1, gl=1, type="mayaBinary", ignoreVersion=1,
                   shd=["displayLayers", "shadingNetworks", "renderLayersByName"],
-                  mergeNamespacesOnClash=False, options="v=0;")
+                  mergeNamespacesOnClash=True, options="v=0;")
 
     if cmds.ls("vraySettings"):
         cmds.setAttr("vraySettings.relements_usereferenced", 1)
