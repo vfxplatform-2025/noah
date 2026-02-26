@@ -7,3 +7,34 @@ __pycache__/
 *.swo
 *~
 log.txt
+
+# Duplicate script directory
+script/script/
+
+# Backup files
+_backup/
+script/_backup/
+
+# Temp/test/analysis files (root level)
+compare_hair_structures.py
+direct_maya_compare.py
+maya_python_compare.py
+simple_hair_compare.py
+simple_mel_compare.py
+send_mel_to_maya.py
+query_maya.mel
+reference_to_group_cleanup.py
+test_alembic_structure.py
+test_maya_port.py
+test_namespace_merge.py
+cleanup_analysis.md
+namespace_fix_documentation.md
+reference_cleanup_list.md
+run_noah.py
+
+# Temp scripts with _ prefix
+script/__imagePlaneScript.py
+script/_alembicScript.py
+script/_find2DPZ.py
+script/_20241011_find2DPZ.py
+script/_multi_camExport.py
