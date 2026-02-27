@@ -3,7 +3,6 @@
 import os, sys
 import imp
 sys.path.append(os.path.dirname(os.path.abspath(__file__)))
-# sys.path.append("/core/Linux/APPZ/renderFarm/tractor/Tractor-2.4/lib/python2.7/site-packages")
 import tractor.api.author as author
 imp.reload(author)
 
